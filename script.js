@@ -14,12 +14,32 @@ var penalty = 10;
 //question template
 var questions = [
   {
-    title: "",
-    choices: ["", "", "", ""],
-    answer: "",
+    title: "Which of the following solves for conditions?",
+    choices: ["For loop", "Return", "If statement", "Switch"],
+    answer: "If statement",
+  },
+  {
+    title: "This is used to store multiple elements in a single variable",
+    choices: ["Array", "String", "Function", "Scope"],
+    answer: "Array",
+  },
+  {
+    title: "var x; what would this variable be described as?",
+    choices: ["Number", "Object", "String", "Undefined"],
+    answer: "Undefined",
+  },
+  {
+    title: "Which of the following cases is best used in CSS?",
+    choices: ["PascalCase", "kebab-case", "snake_case", "camelCase"],
+    answer: "kebab-case",
+  },
+  {
+    title: "This method is used to remove the last element in an array",
+    choices: ["Push", "Reduce", "Pop", "Slice"],
+    answer: "Pop",
   },
 ];
-//
+// A timer function to start and reset the quiz
 timer.addEventListener("click", function () {
   if (defaultTime === 0) {
     defaultTime = countdown(function () {
