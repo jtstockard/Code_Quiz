@@ -6,7 +6,6 @@ var currentTime = document.querySelector("#currentTime");
 var createUl = document.createElement("ul");
 //numeric values
 var score = 0;
-var questionNo = 0;
 var timeLeft = 60;
 var defaultTime = 0;
 var penalty = 10;
@@ -42,7 +41,7 @@ var questions = [
 // A timer function to start and reset the quiz
 timer.addEventListener("click", function () {
   if (defaultTime === 0) {
-    defaultTime = countdown(function () {
+    defaultTime = setInterval(function () {
       timeLeft--;
       currentTime.textContent = "Time: " + timeLeft;
 
@@ -61,9 +60,10 @@ function render(questionsIndex) {
 
   for (i = 0; i < questions.length; i++) {
     var userQuestion = questions[questionsIndex].title;
-    var userChoices = questions[questionindex].choices;
+    var userChoices = questions[questionsIndex].choices;
     questionsDiv.textContent = userQuestion;
   }
+  var index = 1;
   userChoices.forEach(function (newItem) {
     var listItem = document.createElement("li");
     listItem.textContent = newItem;
@@ -80,21 +80,90 @@ function compare(event) {
     var createDiv = document.createElement("div");
     createDiv.setAttribute("id", "createDiv");
     //this calls back the answer in the array to distinguish right answers out of the text content
-    if (element.textcontent == questions[questionindex].answer) {
+    if (element.textcontent == questions[questionsIndex].answer) {
       score++;
       createDiv.textContent = "Correct Answer!";
     } else {
-      secondsLeft = secondsLeft - penalty;
-      createDiv.textContent = "Incorrect, the answer is " + questions[questionIndex].answer;
+      timeLeft = timeLeft - penalty;
+      createDiv.textContent = "Incorrect, the answer is " + questions[questionsIndex].answer;
     }
   }
-  questionIndex++;
+  questionsIndex++;
 
   if (questionsIndex >= questions.length) {
-    createDiv.textContent = "Final score:" + score + "/" + questions.length;
+    quizOver();
+    createDiv.textContent = "You got right:" + score + "/" + questions.length;
   } else {
-    render(questionIndex);
+    render(questionsIndex);
   }
   questionsDiv.appendChild(createDiv);
 }
 //function to append the high score to the last page and then store all info locally
+function quizOver() {
+  questionsDiv.innerHTML = "";
+  currentTime.innerHTML = "";
+
+  var createH1 = document.createElement("h1");
+  createH1.setAttribute("id", "createH1");
+  createH1.textContent = "Quiz Over!";
+
+  questionsDiv.appendChild(createH1);
+
+  var createP = document.createElement("p");
+  createP.setAttribute("id", "createP");
+
+  questionsDiv.appendChild(createP);
+
+  if (timeLeft >= 0) {
+    var scoreInSeconds = timeLeft;
+    var createP1 = document.createElement("p");
+    clearInterval(holdInterval);
+    createP.textContant = "Final score: " + scoreInSeconds;
+
+    questionsDiv.appendChild(createP1);
+  }
+
+  var createLabel = document.createElement("label");
+  createLabel.setAttribute("id", "createLabel");
+  createLabel.textContent = "Please enter your name: ";
+
+  questionsDiv.appendChild(createLabel);
+
+  var createInput = document.createElement("input");
+  createInput.setAttribute("type", "text");
+  createInput.setAttribute("id", "name");
+  createInput.textContent = "";
+
+  questionsDiv.appendChild(createInput);
+
+  var createSumbit = document.createElement("button");
+  createSumbit.setAttribute("type", "submit");
+  createSumbit.setAttribute("id", "Submit");
+  createSubmit.textContent = "Submit";
+
+  questionsDiv.appendChild(createSumbit);
+
+  createSumbit.addEventListener("click", function () {
+    var name = createInput.value;
+
+    if (name === null) {
+      console.log("No value entered!");
+    } else {
+      var finalScore = {
+        name: name,
+        score: score,
+      };
+      console.log(finalScore);
+
+      var allScores = localStorage.getItem("allScores");
+      if (allScores === null) {
+        allScores = [];
+      } else {
+        allScores = JSON.parse(allScores);
+      }
+      allScores.push(finalScore);
+      var newScore = JSON.stringify(allScores);
+      localStorage.setItem("allScores", newScore);
+    }
+  });
+}
