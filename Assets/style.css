@@ -7,4 +7,71 @@
   border: 1px;
 }
 #questions {
+  margin: 20px;
+}
+
+#currentTime {
+  float: right;
+}
+
+#startTime,
+#Submit {
+  background-color: darkblue;
+  color: #fff;
+  margin: 33%;
+  padding: 15px 30px;
+  font-size: 20px;
+}
+h1 {
+  text-align: center;
+}
+button {
+  border-radius: 8px;
+}
+li {
+  background-color: darkblue;
+  color: #fff;
+  margin-top: 10px;
+  padding: 5px 15px;
+  width: 80%;
+  font-size: 18px;
+}
+textarea {
+  width: 90%;
+  margin: 20%;
+}
+label {
+  margin-right: 10px;
+}
+input {
+  margin-bottom: 20px;
+}
+#createDiv {
+  margin-top: 20px;
+  border-top: 1px solid grey;
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    max-width: 786px;
+  }
+  #wrapper {
+    position: absolute;
+    left: 20%;
+  }
+  a {
+    margin-left: 20%;
+  }
+}
+@media screen and (max-width: 425px) {
+  body {
+    max-width: 425px;
+  }
+  #wrapper {
+    position: absolute;
+    left: 10%;
+  }
+  a {
+    margin-left: 10%;
+  }
 }
