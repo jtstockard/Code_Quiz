@@ -6,6 +6,7 @@ var currentTime = document.querySelector("#currentTime");
 var createUl = document.createElement("ul");
 //numeric values
 var score = 0;
+var questionsIndex = 0;
 var timeLeft = 60;
 var defaultTime = 0;
 var penalty = 10;
@@ -63,7 +64,6 @@ function render(questionsIndex) {
     var userChoices = questions[questionsIndex].choices;
     questionsDiv.textContent = userQuestion;
   }
-  var index = 1;
   userChoices.forEach(function (newItem) {
     var listItem = document.createElement("li");
     listItem.textContent = newItem;
@@ -80,7 +80,7 @@ function compare(event) {
     var createDiv = document.createElement("div");
     createDiv.setAttribute("id", "createDiv");
     //this calls back the answer in the array to distinguish right answers out of the text content
-    if (element.textcontent == questions[questionsIndex].answer) {
+    if (element.textContent === questions[questionsIndex].answer) {
       score++;
       createDiv.textContent = "Correct Answer!";
     } else {
@@ -117,7 +117,6 @@ function quizOver() {
   if (timeLeft >= 0) {
     var scoreInSeconds = timeLeft;
     var createP1 = document.createElement("p");
-    clearInterval(holdInterval);
     createP.textContant = "Final score: " + scoreInSeconds;
 
     questionsDiv.appendChild(createP1);
@@ -136,14 +135,14 @@ function quizOver() {
 
   questionsDiv.appendChild(createInput);
 
-  var createSumbit = document.createElement("button");
-  createSumbit.setAttribute("type", "submit");
-  createSumbit.setAttribute("id", "Submit");
+  var createSubmit = document.createElement("button");
+  createSubmit.setAttribute("type", "submit");
+  createSubmit.setAttribute("id", "Submit");
   createSubmit.textContent = "Submit";
 
-  questionsDiv.appendChild(createSumbit);
+  questionsDiv.appendChild(createSubmit);
 
-  createSumbit.addEventListener("click", function () {
+  createSubmit.addEventListener("click", function () {
     var name = createInput.value;
 
     if (name === null) {
